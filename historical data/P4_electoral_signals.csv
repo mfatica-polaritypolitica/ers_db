@@ -1,0 +1,15 @@
+electoral_id,record_date,last_election_date,next_election_due,governing_party,governing_poll_ptc,opposition_poll_ptc,labour_poll_ptc,conservative_poll_ptc,libdem_poll_ptc,reform_poll_ptc,green_poll_ptc,poll_source,prediction_market_prob,gov_change_12m,ingested_at
+P4-001,01/01/2023,12/12/2019,28/01/2025,Conservative,25.0,47.0,47.0,25.0,9.0,5.0,4.0,YouGov / Savanta aggregate (Jan 2023),0.03,0.82,17/04/2026
+P4-002,01/04/2023,12/12/2019,28/01/2025,Conservative,26.0,47.0,47.0,26.0,9.0,6.0,5.0,YouGov / Ipsos aggregate (Apr 2023),0.04,0.80,17/04/2026
+P4-003,01/07/2023,12/12/2019,28/01/2025,Conservative,26.0,44.0,44.0,26.0,9.0,7.0,6.0,YouGov / Savanta aggregate (Jul 2023),0.04,0.81,17/04/2026
+P4-004,01/10/2023,12/12/2019,28/01/2025,Conservative,25.0,45.0,45.0,25.0,9.0,8.0,6.0,YouGov / Opinium aggregate (Oct 2023),0.03,0.83,17/04/2026
+P4-005,01/01/2024,12/12/2019,28/01/2025,Conservative,24.0,44.0,44.0,24.0,9.0,11.0,6.0,YouGov / Savanta aggregate (Jan 2024),0.04,0.84,17/04/2026
+P4-006,01/04/2024,12/12/2019,28/01/2025,Conservative,24.0,43.0,43.0,24.0,9.0,11.0,7.0,YouGov / Savanta / Deltapoll aggregate (Apr 2024),0.04,0.84,17/04/2026
+P4-007,04/07/2024,12/12/2019,04/07/2024,Conservative,23.7,33.7,33.7,23.7,12.2,14.3,6.7,2024 General Election result (actual vote shares),0.01,1.00,17/04/2026
+P4-008,01/10/2024,04/07/2024,15/08/2029,Labour,27.0,22.0,27.0,22.0,11.0,20.0,8.0,YouGov / Opinium aggregate (Oct 2024),0.75,0.08,17/04/2026
+P4-009,01/01/2025,04/07/2024,15/08/2029,Labour,24.0,23.0,24.0,20.0,11.0,23.0,9.0,YouGov aggregate (Jan 2025),0.65,0.14,17/04/2026
+P4-010,01/04/2025,04/07/2024,15/08/2029,Labour,24.0,25.0,24.0,18.0,11.0,25.0,10.0,YouGov / Electoral Calculus aggregate (Apr 2025),0.55,0.22,17/04/2026
+P4-011,01/07/2025,04/07/2024,15/08/2029,Labour,22.0,29.0,22.0,17.0,11.0,29.0,12.0,Electoral Calculus MRP (Jul 2025),0.45,0.30,17/04/2026
+P4-012,01/10/2025,04/07/2024,15/08/2029,Labour,21.0,36.0,21.0,15.0,10.0,36.0,13.0,Electoral Calculus MRP October 2025 (Find Out Now; n=7449),0.35,0.42,17/04/2026
+P4-013,01/01/2026,04/07/2024,15/08/2029,Labour,19.0,26.0,19.0,18.0,11.0,26.0,14.0,YouGov / PolitPro aggregate (Jan 2026),0.38,0.38,17/04/2026
+P4-014,01/04/2026,04/07/2024,15/08/2029,Labour,18.0,25.9,18.0,18.6,11.7,25.9,16.7,PolitPro / Electoral Reform Society aggregate (Mar-Apr 2026),0.40,0.36,17/04/2026
