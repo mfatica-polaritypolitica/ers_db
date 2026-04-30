@@ -1483,7 +1483,7 @@ input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;hei
 
 <!-- ════════════════════ SIG: MEDIA & CIVIL SOCIETY ════════════════════ -->
 <div class="page" id="page-sig-med">
-  <div class="slabel">Signal sources — Media & Civil Society</div>
+  <div class="slabel">Signal sources — Media & civil Society</div>
   <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
     <div class="kpi-chip" style="border-top:3px solid var(--amb);">
       <div class="kpi-k">Media & NGO score</div>
@@ -2005,6 +2005,98 @@ function goTo(pageId, navEl) {
   }
   document.getElementById('mainArea').scrollTop = 0;
 }
+
+// ── Live signal rendering ──────────────────────────────────────────────────
+
+const SIGNAL_PAGES = {
+  'page-sig-leg': 'Legislative',
+  'page-sig-pol': 'Political',
+  'page-sig-reg': 'Regulatory',
+  'page-sig-jud': 'Judicial',
+  'page-sig-med': 'Media & civil society',
+};
+
+function signalBadge(s) {
+  const e = s.enforcement_signal;
+  if (e >= 0.7) return '<span class="sig sig-r">High</span>';
+  if (e >= 0.4) return '<span class="sig sig-a">Medium</span>';
+  if (e !== null && e !== undefined) return '<span class="sig sig-n">Low</span>';
+  const t = (s.content_type || '').toLowerCase();
+  if (t.includes('statutory')) return '<span class="sig sig-r">Trigger</span>';
+  if (t.includes('consultation')) return '<span class="sig sig-a">Open</span>';
+  if (t.includes('budget')) return '<span class="sig sig-a">Budget</span>';
+  if (t.includes('electoral')) return '<span class="sig sig-n">Stable</span>';
+  if (t.includes('passed') || t.includes('assent')) return '<span class="sig sig-n">Passed</span>';
+  return '<span class="sig sig-n">Signal</span>';
+}
+
+function renderSignalTable(signals) {
+  if (!signals.length) return '<p style="padding:16px;color:var(--ink3);font-size:13px;">No signals found for this category.</p>';
+  const rows = signals.map(s => `
+    <tr>
+      <td>
+        <div class="src-t">${s.title || ''}</div>
+        <div class="src-m">${s.summary || ''}</div>
+      </td>
+      <td><span style="font-family:var(--mono);font-size:10px;color:var(--ink2)">${s.content_type || ''}</span></td>
+      <td><span style="font-family:var(--mono);font-size:10px;color:var(--ink3)">${s.date ? s.date.slice(0,10) : ''}</span></td>
+      <td>${signalBadge(s)}</td>
+    </tr>`).join('');
+  return `
+    <table class="src-table">
+      <thead><tr>
+        <th style="width:50%">Source</th>
+        <th style="width:22%">Type</th>
+        <th style="width:16%">Date</th>
+        <th style="width:12%">Signal</th>
+      </tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+}
+
+async function loadSignalPage(pageId) {
+  const category = SIGNAL_PAGES[pageId];
+  if (!category) return;
+
+  const page = document.getElementById(pageId);
+  if (!page) return;
+
+  // Find or create the card body where the table lives
+  let cardBody = page.querySelector('.live-signal-body');
+  if (!cardBody) {
+    // Find the existing card and replace its inner content
+    const card = page.querySelector('.card');
+    if (!card) return;
+    // Keep the card header, replace everything after it
+    const head = card.querySelector('.card-head');
+    cardBody = document.createElement('div');
+    cardBody.className = 'live-signal-body';
+    card.innerHTML = '';
+    if (head) card.appendChild(head);
+    card.appendChild(cardBody);
+  }
+
+  cardBody.innerHTML = '<p style="padding:16px;color:var(--ink3);font-size:13px;">Loading...</p>';
+
+  try {
+    const url = `${API_BASE}/api/v1/signals?category=${encodeURIComponent(category)}&limit=25`;
+    const res = await fetch(url);
+    const data = await res.json();
+    cardBody.innerHTML = renderSignalTable(data);
+  } catch (e) {
+    cardBody.innerHTML = '<p style="padding:16px;color:var(--red);font-size:13px;">Failed to load signals.</p>';
+  }
+}
+
+// Override goTo to trigger live loading for signal pages
+const _originalGoTo = goTo;
+window.goTo = function(pageId, navEl) {
+  _originalGoTo(pageId, navEl);
+  if (SIGNAL_PAGES[pageId]) loadSignalPage(pageId);
+};
+
+// Load the default signal page on startup
+loadSignalPage('page-sig-leg');
 
 function toggleChain(toggle) {
   const icon = toggle.querySelector('.chain-toggle-icon');
