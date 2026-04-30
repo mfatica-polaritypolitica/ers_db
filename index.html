@@ -2083,6 +2083,7 @@ async function loadSignalPage(pageId) {
     const res = await fetch(url);
     const data = await res.json();
     cardBody.innerHTML = renderSignalTable(data);
+    document.getElementById('mainArea').scrollTop = 0;
   } catch (e) {
     cardBody.innerHTML = '<p style="padding:16px;color:var(--red);font-size:13px;">Failed to load signals.</p>';
   }
