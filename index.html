@@ -2291,7 +2291,7 @@ function exportPDF() {
 (function () {
   'use strict';
 
-  const API_BASE   = 'https://ers-db.onrender.com'; // ← change to your deployed API URL
+  window.API_BASE = 'https://ers-db.onrender.com'; // ← change to your deployed API URL
   const API_URL    = API_BASE + '/api/v1/signals?limit=50';
   const REFRESH_MS = 30 * 60 * 1000;
   const STORAGE_KEY = 'reg1_intake_v1';
