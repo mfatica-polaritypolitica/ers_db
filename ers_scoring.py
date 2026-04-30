@@ -49,6 +49,11 @@ from datetime import date, datetime, timedelta, timezone
 from typing import Optional
 
 import numpy as np
+for _t in [np.float64, np.float32, np.int64, np.int32]:
+    try:
+        _t.__conform__ = lambda self, proto: float(self)
+    except TypeError:
+        pass
 import pandas as pd
 from dotenv import load_dotenv
 from sqlalchemy import (
@@ -832,6 +837,16 @@ def compute_ers(
 
 def save_composite_score(composite: ERSCompositeScore, session: Session):
     """Upsert a composite score (replace if same entity+window_end already exists)."""
+    # Cast numpy floats to native Python floats for SQLAlchemy/psycopg2 compatibility
+    for field in [
+        'ers_score', 'regulatory_score', 'legislative_score', 'political_score',
+        'judicial_score', 'media_score', 'complaint_score', 'data_completeness',
+        'w_regulatory', 'w_legislative', 'w_political', 'w_judicial', 'w_media', 'w_complaint'
+    ]:
+        val = getattr(composite, field, None)
+        if val is not None:
+            setattr(composite, field, float(val))
+
     existing = session.query(ERSCompositeScore).filter_by(
         entity_type=composite.entity_type,
         entity_id=composite.entity_id,
