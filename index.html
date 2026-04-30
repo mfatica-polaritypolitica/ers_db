@@ -4120,7 +4120,7 @@ function exportPDF() {
         buildRow(s, 'Statutory instrument', s.si_status || 'Made', sigClass(s.relevance_score))),
     ];
     injectIntoBulk('sig-leg', legRows);
-    injectIntoBulk(document.querySelector('#page-sig-leg table.src-table tbody'), legRows);
+    injectIntoBulk(document.querySelector('#page-sig-leg .live-signal-body') || document.querySelector('#page-sig-leg table.src-table tbody'), legRows);
 
     // ── Political ───────────────────────────────────────────────────────────
     const polRows = [
