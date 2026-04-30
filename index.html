@@ -2075,14 +2075,14 @@ async function loadSignalPage(pageId) {
   cardBody.innerHTML = '<p style="padding:16px;color:var(--ink3);font-size:13px;">Loading...</p>';
 
   try {
-    const url = `${API_BASE}/api/v1/signals?category=${encodeURIComponent(category)}&limit=25`;
+    const url = `https://ers-db.onrender.com/api/v1/signals?category=${encodeURIComponent(category)}&limit=25`;
     const res = await fetch(url);
     const data = await res.json();
     cardBody.innerHTML = renderSignalTable(data);
+    document.getElementById('mainArea').scrollTop = 0;
   } catch (e) {
     cardBody.innerHTML = '<p style="padding:16px;color:var(--red);font-size:13px;">Failed to load signals.</p>';
   }
-}
 
 // Override goTo to trigger live loading for signal pages
 const _originalGoTo = goTo;
@@ -4131,7 +4131,7 @@ function exportPDF() {
         buildRow(q, 'Parliamentary Q&A', 'Q&A', sigClass(q.topic_relevance_score))),
     ];
     injectIntoBulk('sig-pol', polRows);
-    injectIntoBulk(document.querySelector('#page-sig-pol table.src-table tbody'), polRows);
+    injectIntoBulk(document.querySelector('#page-sig-pol .live-signal-body') || document.querySelector('#page-sig-pol table.src-table tbody'), polRows);
 
     // ── Regulatory / ICO ────────────────────────────────────────────────────
     const regRows = [
@@ -4149,7 +4149,7 @@ function exportPDF() {
         buildRow(d, 'DRCF joint statement', 'Coord.', sigClass(d.topic_relevance_score))),
     ];
     injectIntoBulk('sig-reg', regRows);
-    injectIntoBulk(document.querySelector('#page-sig-reg table.src-table tbody'), regRows);
+    injectIntoBulk(document.querySelector('#page-sig-reg .live-signal-body') || document.querySelector('#page-sig-reg table.src-table tbody'), regRows);
 
     // ── Judicial ────────────────────────────────────────────────────────────
     const judRows = [
@@ -4164,13 +4164,13 @@ function exportPDF() {
         buildRow(c, 'Supreme Court', c.outcome || 'UKSC', sigClass(c.enforcement_signal))),
     ];
     injectIntoBulk('sig-jud', judRows);
-    injectIntoBulk(document.querySelector('#page-sig-jud table.src-table tbody'), judRows);
+    injectIntoBulk(document.querySelector('#page-sig-jud .live-signal-body') || document.querySelector('#page-sig-jud table.src-table tbody'), judRows);
 
     // ── Media & Civil Society ───────────────────────────────────────────────
     const medRows = media.slice(0, 6).map(m =>
       buildRow(m, 'Press · ' + clip(m.outlet || 'Media', 20),
         m.story_type || 'News', sigClass(m.topic_relevance_score)));
-    injectIntoBulk(document.querySelector('#page-sig-med table.src-table tbody'), medRows);
+    injectIntoBulk(document.querySelector('#page-sig-med .live-signal-body') || document.querySelector('#page-sig-med table.src-table tbody'), medRows);
 
     // ── Alert drawer ────────────────────────────────────────────────────────
     addDrawerAlerts(enforcement, icoNews);
