@@ -4,4 +4,4 @@ The models folder contains the same set of code as the table creator repo. The h
 
 ers_scoring.py is the initial model for the Enforcement Risk Score, a weighted composite index that takes all six components to provide one clear score for clients. The ers_calibration.ipybnb (a Jupyter notebook file) should be used to further calibrate the model as more data is collected in order to ensure the best fit. api.py is the API code that connects the model to the dashboard, it is currently connected to the free stack outlined in the hosting server (Neon, Render, Cloudflare) but can be modified. 
 
-index.html is the source code that creates the dashabord that is connected to the model through the API. 
+index.html is the source code that creates the dashabord that is connected to the model through the API. The markdown file provides more guidance on how to integrate the model and API into the dashboard on a local device.
