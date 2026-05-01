@@ -1,4 +1,4 @@
-This repo contains everything needed to deploy a live version of the dashboard that is connected to the demo model. 
+This repo contains everything needed to deploy a live version of the dashboard that is connected to the demo model. This can be done locally or through one of the hosting options provided. 
 
 The models folder contains the same set of code as the table creator repo. The historical data contains the collected demo data used in the model. There is one CSV per table within the database schema as outlined in the initial dataset framework document. As with the other repo, load_csv.py loads all the CSVs into the SQL database. ers_db_dump.sql is the database in its current form that can be uploaded to a new SQL database. 
 
